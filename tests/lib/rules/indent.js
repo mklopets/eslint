@@ -2359,6 +2359,15 @@ if (Foo) {
     new Foo
 }`
         },
+        {
+            code: `\
+export {
+    foo,
+    bar,
+    baz
+}`,
+            parserOptions: { sourceType: "module" }
+        }
     ],
     invalid: [
         {
@@ -4826,6 +4835,22 @@ foo(
             code: "  new Foo",
             output: "new Foo",
             errors: expectedErrors([1, 0, 2, "Keyword"])
+        },
+        {
+            code: `\
+export {
+foo,
+        bar,
+  baz
+}`,
+            output: `\
+export {
+    foo,
+    bar,
+    baz
+}`,
+            parserOptions: { sourceType: "module" },
+            errors: expectedErrors([[2, 4, 0, "Identifier"], [3, 4, 8, "Identifier"], [4, 4, 2, "Identifier"]])
         }
     ]
 });
