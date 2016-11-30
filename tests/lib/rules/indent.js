@@ -4595,8 +4595,8 @@ foo && (
             code: `\
 \`foo\${
 bar}\``,
-            output:
-            `\`foo\${
+            output: `\
+\`foo\${
   bar}\``,
             options: [2],
             parserOptions: {ecmaVersion: 6},
@@ -4607,8 +4607,8 @@ bar}\``,
 \`foo\${
     \`bar\${
 baz}\`}\``,
-            output:
-            `\`foo\${
+            output: `\
+\`foo\${
   \`bar\${
     baz}\`}\``,
             options: [2],
@@ -4622,8 +4622,8 @@ baz}\`}\``,
   baz
     }\`
   }\``,
-            output:
-            `\`foo\${
+            output: `\
+\`foo\${
   \`bar\${
     baz
   }\`
@@ -4639,8 +4639,8 @@ baz}\`}\``,
   bar
 )
 }\``,
-            output:
-            `\`foo\${
+            output: `\
+\`foo\${
   (
     bar
   )
@@ -4654,18 +4654,18 @@ baz}\`}\``,
 function foo() {
     const template = \`the indentation of
 a curly element in a \${
-    node.type
-} node is checked.\`;
+        node.type
+    } node is checked.\`;
 }`,
             output:
             `\
 function foo() {
     const template = \`the indentation of
 a curly element in a \${
-        node.type
-    } node is checked.\`;
+    node.type
+} node is checked.\`;
 }`,
-            errors: expectedErrors([[4, 8, 4, "Identifier"], [5, 4, 0, "Template"]]),
+            errors: expectedErrors([[4, 4, 8, "Identifier"], [5, 0, 4, "Template"]]),
             parserOptions: {ecmaVersion: 6}
         },
         {
@@ -4681,10 +4681,10 @@ closing curly is at the end of the line \${
 function foo() {
     const template = \`this time the
 closing curly is at the end of the line \${
-        foo}
+    foo}
         so the spaces before this line aren't removed.\`;
 }`,
-            errors: expectedErrors([4, 8, 12, "Identifier"]),
+            errors: expectedErrors([4, 4, 12, "Identifier"]),
             parserOptions: {ecmaVersion: 6}
         },
         {
