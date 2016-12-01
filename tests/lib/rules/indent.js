@@ -2163,6 +2163,17 @@ switch (foo) {
         },
         {
 
+            code: `\
+function foo() {
+    \`foo\${bar}baz\${
+        qux}foo\${
+        bar}baz\`
+}
+`,
+            parserOptions: {ecmaVersion: 6}
+        },
+        {
+
             // https://github.com/eslint/eslint/issues/7320
             code: `\
 JSON
@@ -4648,6 +4659,22 @@ baz}\`}\``,
             options: [2],
             parserOptions: {ecmaVersion: 6},
             errors: expectedErrors([[2, 2, 0, "Punctuator"], [3, 4, 2, "Identifier"], [4, 2, 0, "Punctuator"]])
+        },
+        {
+            code: `\
+function foo() {
+    \`foo\${bar}baz\${
+qux}foo\${
+  bar}baz\`
+}`,
+            output: `\
+function foo() {
+    \`foo\${bar}baz\${
+        qux}foo\${
+        bar}baz\`
+}`,
+            parserOptions: {ecmaVersion: 6},
+            errors: expectedErrors([[3, 8, 0, "Identifier"], [4, 8, 2, "Identifier"]])
         },
         {
             code: `\
